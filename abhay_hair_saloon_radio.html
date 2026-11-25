@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#11100e">
+<title>ABHAY HAIR SALOON — Retro Radio</title>
+<style>
+:root{--bg:#11100e;--panel:#1c1915;--gold:#d8ad63;--cream:#f1e6d2;--muted:#a99b85}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#38291c 0,#17130f 38%,#0c0b0a 100%);color:var(--cream);font-family:Georgia,'Times New Roman',serif;min-height:100vh}
+.wrap{width:min(940px,92%);margin:auto;padding:28px 0 48px}
+.top{text-align:center;border-bottom:1px solid #6f5432;padding:20px 10px 26px}
+.eyebrow{font:11px Arial,sans-serif;letter-spacing:5px;color:var(--gold);text-transform:uppercase}
+h1{font-size:clamp(34px,7vw,66px);letter-spacing:2px;margin:12px 0 5px;color:#f4dfb8;text-shadow:0 3px 20px #000}
+.sub{font:12px Arial,sans-serif;letter-spacing:3px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:24px}
+.card{background:linear-gradient(145deg,#282119,#171411);border:1px solid #59452d;border-radius:18px;padding:22px;box-shadow:0 18px 50px #0008}
+.radio{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:410px}
+.disc{width:190px;height:190px;border-radius:50%;background:repeating-radial-gradient(circle,#161616 0 3px,#292929 4px 6px);border:7px solid #a47a3f;display:grid;place-items:center;box-shadow:0 0 35px #000}
+.disc:before{content:"";width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,#e8d2a7 0 5px,#7d552d 6px 100%);border:3px solid #d5ad6b}
+.now{font:11px Arial,sans-serif;letter-spacing:3px;color:var(--gold);margin:24px 0 8px}
+.track{font-size:23px;margin:0 0 6px}.artist{font:13px Arial,sans-serif;color:var(--muted)}
+.controls{display:flex;align-items:center;justify-content:center;gap:16px;margin:22px 0}
+button{cursor:pointer;border:1px solid #987344;color:var(--cream);background:#332719;border-radius:999px;padding:11px 16px;font:13px Arial,sans-serif}
+button:hover{background:#5a4024}.play{width:62px;height:62px;border:2px solid var(--gold);background:var(--gold);color:#1a130b;font-size:21px;font-weight:bold}
+.progress{width:100%;max-width:360px;display:flex;align-items:center;gap:10px;font:11px Arial,sans-serif;color:var(--muted)}
+input[type=range]{accent-color:var(--gold);width:100%}
+.section-title{font-size:21px;color:#f1d7a8;margin:0 0 15px}
+.hint{font:12px/1.6 Arial,sans-serif;color:var(--muted)}
+.tracklist{display:flex;flex-direction:column;gap:8px;margin-top:15px;max-height:245px;overflow:auto}
+.trackrow{display:flex;align-items:center;gap:12px;padding:11px;border:1px solid #443626;border-radius:10px;background:#171411}
+.trackrow .num{color:var(--gold);font:12px Arial,sans-serif}.trackrow .name{flex:1;font:13px Arial,sans-serif}.trackrow small{display:block;color:var(--muted);margin-top:3px}
+.trackrow button{padding:7px 11px}
+.upload{display:inline-block;margin-top:14px;border:1px dashed #9b7849;padding:12px;border-radius:10px;color:var(--gold);font:12px Arial,sans-serif;cursor:pointer}
+.upload input{display:none}
+.footer{text-align:center;color:#8f806c;font:11px Arial,sans-serif;letter-spacing:2px;margin-top:24px}
+@media(max-width:700px){.layout{grid-template-columns:1fr}.radio{min-height:360px}.disc{width:155px;height:155px}.card{padding:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">The Retro Radio Experience</div>
+    <h1>ABHAY HAIR SALOON</h1>
+    <div class="sub">2000s HINDI • OLD IS GOLD • ALWAYS CLASSIC</div>
+  </header>
+  <main class="layout">
+    <section class="card radio">
+      <div class="disc" aria-hidden="true"></div>
+      <div class="now">NOW PLAYING</div>
+      <h2 class="track" id="trackTitle">Choose a Hindi song</h2>
+      <div class="artist" id="trackArtist">Your retro radio is ready</div>
+      <div class="controls">
+        <button id="prev" aria-label="Previous">|◀</button>
+        <button class="play" id="play" aria-label="Play">▶</button>
+        <button id="next" aria-label="Next">▶|</button>
+      </div>
+      <div class="progress"><span id="current">0:00</span><input id="seek" type="range" min="0" max="100" value="0"><span id="duration">0:00</span></div>
+      <div style="width:100%;max-width:360px;margin-top:18px;text-align:left">
+        <label class="hint" for="volume">VOLUME</label>
+        <input id="volume" type="range" min="0" max="1" step=".01" value=".8">
+      </div>
+      <audio id="audio" preload="metadata"></audio>
+    </section>
+    <section class="card">
+      <h2 class="section-title">Hindi Retro Playlist</h2>
+      <p class="hint">Apne phone ya computer se woh MP3 gaane add karein jinhe use karne ka aapko adhikar hai. Gaana tabhi chalega jab aap Play dabayenge.</p>
+      <label class="upload">＋ ADD YOUR SONGS (MP3)
+        <input id="files" type="file" accept="audio/*" multiple>
+      </label>
+      <div class="tracklist" id="list">
+        <div class="hint">Abhi playlist khaali hai. MP3 files add karke apni playlist banayein.</div>
+      </div>
+      <p class="hint" style="margin-top:18px">Tip: Public website par gaane chalane ke liye licensed audio ya official music embeds ka use karein. Copyrighted songs ko bina permission upload na karein.</p>
+    </section>
+  </main>
+  <div class="footer">ABHAY HAIR SALOON · RETRO RADIO · MADE FOR MUSIC LOVERS</div>
+</div>
+<script>
+const audio=document.getElementById('audio'), playBtn=document.getElementById('play'), filesInput=document.getElementById('files');
+const title=document.getElementById('trackTitle'), artist=document.getElementById('trackArtist'), list=document.getElementById('list');
+const seek=document.getElementById('seek'), volume=document.getElementById('volume');
+let songs=[], currentIndex=-1;
+const fmt=s=>{if(!Number.isFinite(s))return '0:00';return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0')};
+function load(i){if(i<0||i>=songs.length)return;currentIndex=i;audio.src=songs[i].url;title.textContent=songs[i].name;artist.textContent='ABHAY HAIR SALOON • HINDI RETRO';render();audio.play().then(()=>playBtn.textContent='Ⅱ').catch(()=>playBtn.textContent='▶')}
+function render(){list.innerHTML='';songs.forEach((s,i)=>{const row=document.createElement('div');row.className='trackrow';const n=document.createElement('span');n.className='num';n.textContent=String(i+1).padStart(2,'0');const name=document.createElement('div');name.className='name';name.textContent=s.name;const small=document.createElement('small');small.textContent=i===currentIndex?'NOW PLAYING':'Hindi audio';name.appendChild(small);const b=document.createElement('button');b.textContent=i===currentIndex&& !audio.paused?'Ⅱ':'▶';b.onclick=()=>{if(i===currentIndex){toggle()}else load(i)};row.append(n,name,b);list.appendChild(row)})}
+function toggle(){if(currentIndex<0){if(songs.length)load(0);return}if(audio.paused){audio.play().then(()=>playBtn.textContent='Ⅱ')}else{audio.pause();playBtn.textContent='▶'}render()}
+playBtn.onclick=toggle;
+document.getElementById('next').onclick=()=>{if(songs.length)load((currentIndex+1)%songs.length)};
+document.getElementById('prev').onclick=()=>{if(songs.length)load((currentIndex-1+songs.length)%songs.length)};
+filesInput.onchange=e=>{[...e.target.files].forEach(f=>songs.push({name:f.name.replace(/\.[^.]+$/,''),url:URL.createObjectURL(f)}));render();if(currentIndex<0&&songs.length){currentIndex=0;title.textContent=songs[0].name;artist.textContent='Ready to play';render()}};
+audio.onplay=()=>{playBtn.textContent='Ⅱ';render()};audio.onpause=()=>{playBtn.textContent='▶';render()};
+audio.onended=()=>{if(songs.length)load((currentIndex+1)%songs.length)};
+audio.ontimeupdate=()=>{if(audio.duration){seek.value=audio.currentTime/audio.duration*100;document.getElementById('current').textContent=fmt(audio.currentTime);document.getElementById('duration').textContent=fmt(audio.duration)}};
+seek.oninput=()=>{if(audio.duration)audio.currentTime=seek.value/100*audio.duration};
+volume.oninput=()=>audio.volume=volume.value;audio.volume=.8;
+</script>
+</body>
+</html>
